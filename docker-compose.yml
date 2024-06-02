@@ -1,0 +1,26 @@
+services:
+  zinc:
+    image: public.ecr.aws/zinclabs/zincsearch:latest
+    container_name: zincsearch
+    ports:
+      - "4080:4080"
+    environment:
+      ZINC_DATA_PATH: "/data"
+      ZINC_FIRST_ADMIN_USER: "admin"
+      ZINC_FIRST_ADMIN_PASSWORD: "admin"
+    volumes:
+      - ./zincsearch/data:/data
+    user: "1000:1000"
+
+  indexer:
+    build:
+      context: ./indexer
+      dockerfile: Dockerfile
+    container_name: enron_indexer
+    depends_on: 
+      - zinc
+    environment:
+      ZINCSEARCH_URL: "http://zinc:4080"
+      SKIP_PROFILING: "TRUE"
+
+

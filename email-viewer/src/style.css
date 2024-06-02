@@ -1,0 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components{
+    .highlight {
+        @apply bg-yellow-300 pt-0.5 px-1;
+    }
+}

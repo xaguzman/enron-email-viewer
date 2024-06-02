@@ -1,0 +1,37 @@
+@host=http://localhost:4080
+
+POST {{host}}/api/enron-emails/_search HTTP/1.1
+content-type: application/json
+Authorization: Basic admin:admin
+
+{
+    "search_type": "matchphrase",
+    "query": {
+        "term": "limit changes",
+        "field": "_all"
+    },
+    "sort_fields": ["Date"],
+    "from": 0,
+    "max_results": 20,
+    "highlight": {
+        "fields": {
+            "Body": {
+                "pre_tags": ["<mark>"],
+                "post_tags": ["</mark>"]
+            },
+            "Subject": {
+                "pre_tags": ["<mark>"],
+                "post_tags": ["</mark>"]
+            }
+        }
+    }
+    //"_source": [
+        // Leave this as empty array to return all fields.
+    //]
+} 
+
+###
+
+GET {{host}}/api/enron-emails/_mapping HTTP/1.1
+content-type: application/json
+Authorization: Basic admin:admin
