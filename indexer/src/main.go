@@ -80,7 +80,7 @@ func main() {
 			message = err.Error()
 		}
 		fmt.Println("Index not created, skipping document upload. ", message)
-		// return
+		return
 	}
 
 	fmt.Println("Downloading dataset...")

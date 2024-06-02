@@ -8,14 +8,15 @@
     </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref } from 'vue';
 import Magnifier from './icons/Magnifier.vue';
 
 const localQuery = ref('');
 const emit = defineEmits(['query']);
 
-let timeoutId = null;
+let timeoutId: ReturnType<typeof setTimeout> | null = null;
+
 
 const handleInput = () => {
     if (timeoutId) clearTimeout(timeoutId);

@@ -2,6 +2,8 @@ const apiUrl = import.meta.env.VITE_API_URL;
 const apiUser = import.meta.env.VITE_API_USER;
 const apiUserPwd = import.meta.env.VITE_API_USER_PWD;
 
+console.log( {apiUrl, apiUser, apiUserPwd } );
+
 export const queryEmails = async (searchQuery: string) => {
     
     const response = await fetch(`${apiUrl}/api/enron-emails/_search`, {
