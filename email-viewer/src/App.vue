@@ -4,7 +4,7 @@
         <div class="flex gap-2 items-center justify-between bg-slate-100 p-4">
             <div class="flex items-center gap-2"> 
                 <AtIcon class="bg-slate-400 text-white rounded-full size-8 " /> 
-                <h3 class="text-xl">Elron Emails Viewer</h3>
+                <h3 class="text-xl">Enron Emails Viewer</h3>
             </div>
             <SearchInput @query="fetchEmails" />
         </div>

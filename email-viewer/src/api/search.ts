@@ -6,41 +6,20 @@ console.log( {apiUrl, apiUser, apiUserPwd } );
 
 export const queryEmails = async (searchQuery: string) => {
     
-    const response = await fetch(`${apiUrl}/api/enron-emails/_search`, {
+    const response = await fetch(`${apiUrl}/search`, {
         method: 'POST',
         headers: {
-
             'Content-Type': 'application/json',
-            'Authorization': `Basic ${ encodedCredentials() }`
         },
         body: JSON.stringify({
-            search_type: "matchphrase",
-            query: {
-                term: searchQuery,
-                field: "_all"
-            },
-            sort_fields: ["Date"],
-            from: 0,
-            max_results: 20,
-            highlight: {
-                fields: {
-                    "Body": {
-                        "pre_tags": ["<mark class=\"highlight\">"],
-                        "post_tags": ["</mark>"]
-                    },
-                    "Subject": {
-                        "pre_tags": ["<mark class=\"highlight\">"],
-                        "post_tags": ["</mark>"]
-                    }
-                }
-            }
+            query: searchQuery
         })
     });
 
     let result = [];
     if (response.ok) {
         const data = await response.json();
-        result = data.hits.hits
+        result = data
             .map( (hit : any)  => {
                 let result = hit._source
                 result.Id = hit._id;
@@ -52,8 +31,4 @@ export const queryEmails = async (searchQuery: string) => {
     }
 
     return result;
-}
-
-const encodedCredentials = () => {
-    return btoa(`${apiUser}:${apiUserPwd}`);
 }

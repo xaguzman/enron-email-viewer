@@ -3,7 +3,8 @@ FROM golang:1.22.3 as builder
 WORKDIR /app
 
 COPY src/ ./
-COPY *.mod ./
+COPY go.mod ./
+COPY go.sum ./
 #compile app
 RUN CGO_ENABLED=0 GOOS=linux go build -v -o indexer
 

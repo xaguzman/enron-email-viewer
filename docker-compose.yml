@@ -3,7 +3,7 @@ services:
     image: public.ecr.aws/zinclabs/zincsearch:latest
     container_name: zincsearch
     ports:
-      - "5000:4080" # External access via http://localhost:5000
+      - "4080:4080" # External access via http://localhost:4080
     environment:
       ZINC_DATA_PATH: "/data"
       ZINC_FIRST_ADMIN_USER: "admin"
@@ -22,19 +22,29 @@ services:
     environment:
       ZINCSEARCH_URL: "http://zinc:4080" # uses internal port
       SKIP_PROFILING: "TRUE"
+  
+  backend:
+    build:
+      context: ./email-viewer-backend
+      dockerfile: Dockerfile
+    container_name: email_viewer_backend
+    ports:
+      - "3000:3000"  # External access via http://localhost:3000
+    depends_on:
+      - zinc
+    environment:
+      ZINCSEARCH_URL: "http://zinc:4080" # uses internal port
+      ZINCSEARCH_USER: "admin"
+      ZINCSEARCH_PWD: "admin"
 
   web-client:
     build:
       context: ./email-viewer
       dockerfile: Dockerfile
       args:
-        VITE_API_URL: "http://localhost:5000"  # Point to the host's port where Zinc is mapped
-        VITE_API_USER: "admin"
-        VITE_API_USER_PWD: "admin"
+        VITE_API_URL: "http://localhost:3000"  
     container_name: email_viewer
     ports:
-      - "3000:80"  # External access via http://localhost:3000
+      - "8080:80"  # External access via http://localhost:8080
     depends_on:
-      - zinc
-
-
+      - backend
