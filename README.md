@@ -1,7 +1,7 @@
 # Enron Email Viewer
 
 ## Overview
-The Enron Email Viewer is a comprehensive full-stack application designed to index and search through the Enron email dataset using ZincSearch. It's composed of several key components:
+The Enron Email Viewer is a full-stack application designed to index and search through the Enron email dataset using ZincSearch. It's composed of several key components:
 
 1. **ZincSearch**: A search engine used to index and query emails.
 2. **Indexer**: A custom Go application that processes and indexes the Enron email dataset into ZincSearch.
